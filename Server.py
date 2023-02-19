@@ -12,7 +12,7 @@ model = T5ForConditionalGeneration.from_pretrained(model_name)
 class Article(BaseModel):
  text: str
  
-@app.get("/predict/")
+@app.post("/predict/")
 async def predict(article: Article):
     input_ids = tokenizer(
         [article.text],
@@ -34,3 +34,6 @@ async def predict(article: Article):
 @app.get("/")
 async def root():
  return {"message": "Hello World"}
+
+def foo(a,b):
+    return a+b

@@ -8,5 +8,5 @@ data = {'text': article_text}
 headers = {'Content-type': 'application/json', 'Accept': 'text/plain'}
 
 st.write("Краткое содержание:")
-summary = rq.get("http://127.0.0.1:8000/predict/", data=json.dumps(data), headers=headers).json()["summary"]
+summary = rq.post("http://127.0.0.1:8000/predict/", data=json.dumps(data), headers=headers).json()["summary"]
 st.write(summary)

@@ -9,9 +9,11 @@ model_name = "IlyaGusev/rut5_base_sum_gazeta"
 tokenizer = AutoTokenizer.from_pretrained(model_name)
 model = T5ForConditionalGeneration.from_pretrained(model_name)
 
+
 class Article(BaseModel):
- text: str
- 
+    text: str
+
+
 @app.post("/predict/")
 async def predict(article: Article):
     input_ids = tokenizer(
@@ -20,20 +22,19 @@ async def predict(article: Article):
         add_special_tokens=True,
         padding="max_length",
         truncation=True,
-        return_tensors="pt"
+        return_tensors="pt",
     )["input_ids"]
 
-    output_ids = model.generate(
-        input_ids=input_ids,
-        no_repeat_ngram_size=4
-    )[0]
+    output_ids = model.generate(input_ids=input_ids, no_repeat_ngram_size=4)[0]
 
     summary = tokenizer.decode(output_ids, skip_special_tokens=True)
     return {"summary": summary}
 
+
 @app.get("/")
 async def root():
- return {"message": "Hello World"}
+    return {"message": "Hello World"}
 
-def foo(a,b):
-    return a+b
+
+def foo(a, b):
+    return a + b
